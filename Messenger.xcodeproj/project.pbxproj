@@ -24,6 +24,7 @@
 		EA47289825C2D7020075F37D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA47289725C2D7020075F37D /* GoogleService-Info.plist */; };
 		EA4728AC25C2FE5B0075F37D /*  DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA4728AB25C2FE5B0075F37D /*  DatabaseManager.swift */; };
 		EA47297225CAB4370075F37D /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA47297125CAB4360075F37D /* ChatViewController.swift */; };
+		EACF67DE25EDC4E200675169 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF67DD25EDC4E200675169 /* StorageManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		EA47289725C2D7020075F37D /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		EA4728AB25C2FE5B0075F37D /*  DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " DatabaseManager.swift"; sourceTree = "<group>"; };
 		EA47297125CAB4360075F37D /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		EACF67DD25EDC4E200675169 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +127,7 @@
 				EA47284E25C2819A0075F37D /* SceneDelegate.swift */,
 				EA47288325C29FE00075F37D /* Extension.swift */,
 				EA4728AB25C2FE5B0075F37D /*  DatabaseManager.swift */,
+				EACF67DD25EDC4E200675169 /* StorageManager.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 				EA47284F25C2819A0075F37D /* SceneDelegate.swift in Sources */,
 				EA47297225CAB4370075F37D /* ChatViewController.swift in Sources */,
 				EA47287625C29B090075F37D /* PhotoViewerViewController.swift in Sources */,
+				EACF67DE25EDC4E200675169 /* StorageManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
