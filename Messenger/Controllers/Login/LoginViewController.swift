@@ -210,36 +210,66 @@ extension LoginViewController: LoginButtonDelegate {
             return
         }
         
-        let facebookRequest = FBSDKLoginKit.GraphRequest(graphPath: "me", parameters: ["fields":"email, name"], tokenString: token, version: nil, httpMethod: .get)
+        let facebookRequest = FBSDKLoginKit.GraphRequest(graphPath: "me", parameters: ["fields":"email, first_name, last_name, picture.type(large)"], tokenString: token, version: nil, httpMethod: .get)
         
         facebookRequest.start { (_, result, error) in
             guard let result = result as? [String: Any], error == nil else {
                 print("Failed to make facebook graph request")
                 return
             }
-            guard let usereName = result["name"] as? String,
-                  let email = result["email"] as?  String else {
+            print(result)
+
+            guard let firstName = result["first_name"] as? String,
+                  let lastName = result["last_name"] as? String,
+                  let email = result["email"] as?  String,
+                  let picture = result["picture"] as? [String: Any],
+                  let data = picture["data"] as? [String: Any],
+                  let pictureUrl = data["url"] as? String else {
                 print("failed to get email and name from fb result")
                 return
             }
             
             //Mark: - [korean needs to be ..do something :) ]
-            let nameComponents = usereName.components(separatedBy: " ")
+            //let nameComponents = usereName.components(separatedBy: " ")
 //            guard nameComponents.count == 2 else {
 //                return
 //            }
-            let firstName = nameComponents[0]
-            let lastName = ""
-            print("\(firstName)")
+            //let firstName = nameComponents[0]
+            //let lastName = ""
+            //print("\(firstName)")
             DatabaseManager.shared.userExists(with: email) { (exists) in
                 print("\(exists)")
                 if !exists {
                     print("does not exist")
                     
-                    let ChatUser = ChatAppUser(firstName: firstName, lastName:lastName, emailAddress: email)
-                    DatabaseManager.shared.insertUser(with: ChatUser, completion:{ success in
+                    let chatUser = ChatAppUser(firstName: firstName, lastName:lastName, emailAddress: email)
+                    DatabaseManager.shared.insertUser(with: chatUser, completion:{ success in
                         if success {
-                            //upload image
+                            
+                            guard let url = URL(string: pictureUrl) else {
+                                return
+                            }
+                            print("Downloading data from facebook image")
+                            URLSession.shared.dataTask(with: url, completionHandler: { data, _, _  in
+                                guard let data = data else {
+                                    print("Failed to get data from facebook")
+                                    return
+                                }
+
+                                print("Got data from FB, uploading...")
+                                // upload image
+                                let filename = chatUser.profilePictureFileName
+                                StorageManager.shared.uploadProfilePicture(with: data, fileName: filename) { (result) in
+                                    switch result {
+                                    case .success(let downloadURL):
+                                        UserDefaults.standard.set(downloadURL, forKey: "profile_picture_url")
+                                        print(downloadURL)
+                                        
+                                    case .failure(let error):
+                                        print("Storage manager error: \(error)")
+                                    }
+                                }
+                            }).resume()
                         }
                         
                     })
