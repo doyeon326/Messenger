@@ -166,6 +166,7 @@ class LoginViewController: UIViewController {
                 return
             }
             let user = result.user
+            UserDefaults.standard.set(email, forKey: "email")
             print("logged in\(user)")
             strongSelf.navigationController?.dismiss(animated: true, completion: nil)
         })
@@ -228,6 +229,7 @@ extension LoginViewController: LoginButtonDelegate {
                 print("failed to get email and name from fb result")
                 return
             }
+            UserDefaults.standard.set(email,forKey: "email")
             
             //Mark: - [korean needs to be ..do something :) ]
             //let nameComponents = usereName.components(separatedBy: " ")
