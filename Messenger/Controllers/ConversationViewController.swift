@@ -57,25 +57,28 @@ class ConversationViewController: UIViewController {
     }
     private func startListeningForConversation(){
         guard let email = UserDefaults.standard.value(forKey: "email") as? String else  { return }
-        print("starting conversation fetch...")
+        print("🔴 starting conversation fetch...")
         let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+        print("🔴 currrent safe Email : \(safeEmail)")
         
         DatabaseManager.shared.getAllConversation(for: safeEmail, completion: { [weak self] result in
+            print("🔴 result: \(result)")
             switch result{
             case .success(let conversations):
-                print("successfully got conversation models")
+                print(" 🔴 successfully got conversation models")
                 guard !conversations.isEmpty else {
                     return
                 }
                 self?.conversations = conversations
-                print("got conversation")
+                print("🔴 got conversation")
                 DispatchQueue.main.async {
                     self?.tableView.reloadData()
                 }
                 
             case .failure(let error):
-                print("failed to get convas: \(error)")
+                print("🔴 failed to get convas: \(error)")
             }
+            
         })
     }
     
@@ -99,7 +102,7 @@ class ConversationViewController: UIViewController {
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
     }
-    
+     
     override func viewDidLayoutSubviews() {
         tableView.frame = view.bounds
     }
